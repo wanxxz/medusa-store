@@ -4,8 +4,8 @@ services:
     environment:
       NODE_ENV: development
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/medusa
-      JWT_SECRET: foo
-      COOKIE_SECRET: foo
+      JWT_SECRET: ...
+      COOKIE_SECRET: ...
       STORE_CORS: /http://.+/
       ADMIN_CORS: /http://.+/
       MEDUSA_BACKEND_URL: http://localhost:9000
