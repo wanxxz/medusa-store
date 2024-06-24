@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  medusa:
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/medusa
+      JWT_SECRET: foo
+      COOKIE_SECRET: foo
+      STORE_CORS: /http://.+/
+      ADMIN_CORS: /http://.+/
+      MEDUSA_BACKEND_URL: http://localhost:9000
+      MEDUSA_ADMIN_BACKEND_URL: http://localhost:9000
+      STRIPE_API_KEY: sk_...
+      STRIPE_WEBHOOK_SECRET: whsec_...
+    volumes:
+      - ./packages/medusa/src:/app/medusa/packages/medusa/src
+    ports:
+      - "9000:9000"
+      - "7001:7001"
+    command: bash -c "npx -w medusa tsc && npx -w medusa typeorm schema:sync -d datasource.js && npx -w medusa medusa develop"
+
+  storefront:
+    environment:
+      PORT: 8000
+      NODE_ENV: development
+      MEDUSA_BACKEND_URL: http://localhost:9000
+      NEXT_PUBLIC_MEDUSA_BACKEND_URL: http://localhost:9000
+      NEXT_PUBLIC_BASE_URL: https://localhost:8000
+      NEXT_PUBLIC_DEFAULT_REGION: us
+      NEXT_PUBLIC_STRIPE_KEY: pk_...
+    volumes:
+      - ./packages/storefront/public:/app/storefront/packages/storefront/public
+      - ./packages/storefront/src:/app/storefront/packages/storefront/src
+    ports:
+      - "8000:8000"
+    command: npx -w storefront next dev
+
+  postgres:
+    hostname: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: medusa

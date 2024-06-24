@@ -1,0 +1,16 @@
+/*
+
+!.gitignore
+
+!public
+!src
+
+!.env.template
+!README.md
+!next.config.js
+!next-sitemap.js
+!postcss.config.js
+!tailwind.config.js
+!package.json
+!tsconfig.json
+!next-env.d.ts

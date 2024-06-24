@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  medusa:
+    restart: always
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/medusa
+      JWT_SECRET: ...
+      COOKIE_SECRET: ...
+      STORE_CORS: /http://.+/
+      ADMIN_CORS: /http://.+/
+      MEDUSA_BACKEND_URL: http://localhost:9000
+      MEDUSA_ADMIN_BACKEND_URL: http://localhost:9000
+      STRIPE_API_KEY: sk_...
+      STRIPE_WEBHOOK_SECRET: whsec_...
+    ports:
+      - "9000:9000"
+    command: npm -w medusa start
+
+  storefront:
+    restart: always
+    environment:
+      PORT: 8000
+      NODE_ENV: production
+      MEDUSA_BACKEND_URL: http://localhost:9000
+      NEXT_PUBLIC_MEDUSA_BACKEND_URL: http://localhost:9000
+      NEXT_PUBLIC_BASE_URL: https://localhost:8000
+      NEXT_PUBLIC_DEFAULT_REGION: ...
+      NEXT_PUBLIC_STRIPE_KEY: pk_...
+    ports:
+      - "8000:8000"
+    command: npm -w storefront start
+
+  postgres:
+    hostname: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: medusa

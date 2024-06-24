@@ -1,0 +1,11 @@
+FROM node:lts
+
+WORKDIR /app/medusa
+
+COPY package.json .
+
+COPY packages/medusa/package.json packages/medusa/package.json
+
+RUN npm i --verbose
+
+COPY packages/medusa packages/medusa

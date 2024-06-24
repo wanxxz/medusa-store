@@ -1,0 +1,11 @@
+FROM node:lts
+
+WORKDIR /app/storefront
+
+COPY package.json .
+
+COPY packages/storefront/package.json packages/storefront/package.json
+
+RUN npm i --verbose
+
+COPY packages/storefront packages/storefront

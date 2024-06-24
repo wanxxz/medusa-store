@@ -1,0 +1,14 @@
+/*
+
+!.gitignore
+
+!src
+
+!.babelrc.js
+!.env.template
+!README.md
+!datasource.js
+!index.js
+!medusa-config.js
+!package.json
+!tsconfig.json
